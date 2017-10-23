@@ -12,6 +12,7 @@ import './assets/css/common.css'
 import './assets/js/fastclick.js'
 import './assets/js/jquery-weui.js'
 import './assets/js/common.js'
+import './assets/js/fontSize.js'
 
 Vue.config.productionTip = false
 Vue.use(VueResource);
