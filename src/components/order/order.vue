@@ -1,16 +1,16 @@
 <template>
 	<div class="order">
 		<div class="order-head">
-		    <div bindtap="changeTab(0)" class="not-used {{}}" :class="activeTab==0?'active':''">待付款</div>
-		    <div bindtap="changeTab(1)" class="used" :class="activeTab==1?'active':''">待配送</div>
-		    <div bindtap="changeTab(2)" class="expired" :class="activeTab==2?'active':''">待取货</div> 
-		    <div bindtap="changeTab(3)" class="expired" :class="activeTab==3?'active':''">已完成</div> 
+		    <div @click="changeTab(0)" class="not-used " :class="activeTab==0?'active':''">待付款</div>
+		    <div @click="changeTab(1)" class="used" :class="activeTab==1?'active':''">待配送</div>
+		    <div @click="changeTab(2)" class="expired" :class="activeTab==2?'active':''">待取货</div> 
+		    <div @click="changeTab(3)" class="expired" :class="activeTab==3?'active':''">已完成</div> 
 		</div>
   		<!--padding-->
   		<div class='padding-20'></div>
 
   		<!--order body-->
-	  	<!-- <div v-if="orderList.length>0" class='order-body'>
+	  	<div v-if="orderList.length>0" class='order-body'>
 	  			    <div v-for="item in orderList" class='shop-order clearfix'>
 	  	
 	  			      	<div class='shop-name'>
@@ -57,7 +57,7 @@
 	  				      	<span bindtap="topay" class="topay" :class="{'disabled':!clickable}">确认支付</span>
 	  				    </div>
 	  			  	</div>
-	  			</div> -->
+	  			</div>
 		<Foot :curTable="2"></Foot>
 	</div>
 </template>
@@ -69,7 +69,35 @@
 				activeTab:0,
 				cliclable:true,
 				orderList:[],
-				imgPre:'https://static.fuiou.com/'
+				imgPre:'https://static.fuiou.com/',
+				orderList:[
+					{
+						"canRefund":false,"couponAmt":0,"couponAmtYuan":"0.00","couponNo":"",
+						"crtTs":"2017-10-20 13:53:23.466166000","distAmt":0,"distAmtYuan":"0.00",
+						"goodsNum":4,"hostId":"70000030","id":"528","loginId":"15316117950",
+						"mchId":80001850,"mchNm":"么么","openId":"otaoJ0feuOdupdC2wf-Nh7q2LdNw","operator":"",
+						"orderAmt":400,"orderAmtOrg":400,"orderAmtOrgYuan":"4.00","orderAmtStr":"400",
+						"orderAmtYuan":"4.00","orderDt":20171020,
+						"orderGoods":[
+							{
+								"boxNo":"","couponAmt":0,"couponAmtYuan":"0.00","couponNo":"",
+								"crtTs":"2017-10-20 13:53:23.482149000","distId":159,"goodsAmt":100,
+								"goodsAmtYuan":"1.00","goodsImgLogo":"test","goodsNm":"商品1",
+								"goodsNo":"5200004201","hostId":"70000030","id":255,"ip":"","mchId":80001850,
+								"operator":"","orderAmt":400,"orderAmtOrg":400,"orderAmtOrgYuan":"4.00",
+								"orderAmtYuan":"4.00","orderDt":20171020,"orderNo":"200121710200000000218",
+								"orderNum":4,"orderSt":0,"orderStDesc":"待支付 ","remark":"","shopId":60002252,
+								"shopNm":"我的么么","updTs":"2017-10-20 13:53:23.482149000"
+							}
+						],
+						"orderNo":"200121710200000000218","orderSrc":3,"orderSrcDesc":"用户小程序，线上店铺",
+						"orderSt":0,"orderStDesc":"待支付 ","orderTp":1,"orderTpDesc":"线上预售","payMode":2,
+						"payModeDesc":"微信小程序支付","payModeShortDesc":"微信支付","payOrderNo":"",
+						"payTs":"1900-01-01 00:00:00","remark":"","shopNm":"我的么么","showCoupon":false,
+						"uniNotifyUrl":"http://192.168.8.46:14630/ds-callback-notify/o2o/wx","uniOrderNo":"",
+						"updTs":"2017-10-20 13:53:23.466166000","userId":""
+					}
+				]
 			}
 		},
 		components:{
@@ -91,7 +119,6 @@
 	.order-head{
 	  display:flex;
 	  width:100%;
-	  height:1rem;
 	  border-bottom:1px solid #e5e5e5;
 	  background:#fff;
 	}
