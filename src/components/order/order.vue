@@ -11,53 +11,54 @@
 
   		<!--order body-->
 	  	<div v-if="orderList.length>0" class='order-body'>
-	  			    <div v-for="item in orderList" class='shop-order clearfix'>
-	  	
-	  			      	<div class='shop-name'>
-	  			        	<image src="../../image/nearby.png"/>
-	  			        	<span class='s-name'>{{item.shopNm}}</span>
-	  			        	<span class='gt'>></span>
-	  			        	<span hidden="{{activeTab==0 || activeTab==2}}" class='order-success'>{{activeTab==3?'交易完成':'待配送'}}</span>
-	  			      	</div>
-	  	
-	  			      	<div class='shop-goods-list clearfix'>
-	  				        <div v-for="good in item.orderGoods" class='shop-good'>
-	  				          	<image :src="imgPre+good.goodsImgLogo"/>
-	  				          	<image src="../../image/good.png"/>
-	  				          	<span class="shop-good-name">{{good.goodsNm}}</span>
-	  				          	<div class='shop-good-info'>
-	  				            	<span class='shop-good-price'>￥{{good.goodsAmt?good.goodsAmt/100:0}}</span>
-	  				            	<span class='shop-good-num'>X{{good.orderNum}}</span>
-	  				          	</div>
-	  				        </div>
-	  			      	</div>
-	  	
-	  			      	<div v-if="item.couponAmt>0" class='shop-order-info'>
-	  			        	<div class='shop-order-coupon-used'>{{item.couponAmt>0?'已使用:满'+item.couponAmtMin/100+'减'+item.couponAmt/100:'未使用优惠券'}}</div>
-	  			      	</div>
-	  			      	<div class='shop-order-info'>
-	  			        	<div class='shop-order-price'>共{{item.goodsNum}}件商品，实际支付￥<span>{{item.orderAmt/100}}</span><span v-show="{{item.distAmt>0}}">(配送费：{{item.distAmt/100}}元)</span></div>
-	  			      	</div>
-	  			    </div>
+		    <div v-for="item in orderList" class='shop-order clearfix'>
+
+		      	<div class='shop-name'>
+		        	<img src="./nearby.png"/>
+		        	<span class='s-name'>{{item.shopNm}}</span>
+		        	<span class='gt'>></span>
+		        	<span v-show="activeTab==0 || activeTab==2" class='order-success'>{{activeTab==3?'交易完成':'待配送'}}</span>
+		      	</div>
+
+		      	<div class='shop-goods-list clearfix'>
+			        <div v-for="good in item.orderGoods" class='shop-good'>
+			          	<!--<img :src="imgPre+good.goodsImgLogo"/>-->
+			          	<img src="./good.png"/>
+			          	<span class="shop-good-name">{{good.goodsNm}}</span>
+			          	<div class='shop-good-info'>
+			            	<span class='shop-good-price'>￥{{good.goodsAmt?good.goodsAmt/100:0}}</span>
+			            	<span class='shop-good-num'>X{{good.orderNum}}</span>
+			          	</div>
+			        </div>
+		      	</div>
+
+		      	<div v-if="item.couponAmt>0" class='shop-order-info'>
+		        	<div class='shop-order-coupon-used'>{{item.couponAmt>0?'已使用:满'+item.couponAmtMin/100+'减'+item.couponAmt/100:'未使用优惠券'}}</div>
+		      	</div>
+		      	<div class='shop-order-info'>
+		        	<div class='shop-order-price'>共{{item.goodsNum}}件商品，实际支付￥<span>{{item.orderAmt/100}}</span>
+		        	(配送费：{{item.distAmt/100}}元)</div>
+		      	</div>
+		    </div>
 	  	</div>
-	  	  		<div v-else class="no-order">
-	  	    		<span>你还没有相关订单哦</span>
-	  	  		</div>
-	  	  		<div class='padding-100'></div>
-	  	
-	  			<div v-if="{{showPayModel}}" class='pay-info-wrapper'>
-	  			  	<div class="pay-info">
-	  				    <div bindtap="closePayModel" class='close'>X</div>
-	  				    <div class='pay-info-title'>支付</div>
-	  				    <div class='pay-info-body'>
-	  				      	<div class='pay-info-company'>上海富友电子商务有限公司</div>
-	  				      	<div class='pay-info-money'>500</div>
-	  				    </div>
-	  				    <div class='pay-info-pay'>
-	  				      	<span bindtap="topay" class="topay" :class="{'disabled':!clickable}">确认支付</span>
-	  				    </div>
-	  			  	</div>
-	  			</div>
+  		<div v-else class="no-order">
+    		<span>你还没有相关订单哦</span>
+  		</div>
+  		<div class='padding-100'></div>
+
+		<div v-if="showPayModel" class='pay-info-wrapper'>
+		  	<div class="pay-info">
+			    <div bindtap="closePayModel" class='close'>X</div>
+			    <div class='pay-info-title'>支付</div>
+			    <div class='pay-info-body'>
+			      	<div class='pay-info-company'>上海富友电子商务有限公司</div>
+			      	<div class='pay-info-money'>500</div>
+			    </div>
+			    <div class='pay-info-pay'>
+			      	<span bindtap="topay" class="topay" :class="{'disabled':!clickable}">确认支付</span>
+			    </div>
+		  	</div>
+		</div>
 		<Foot :curTable="2"></Foot>
 	</div>
 </template>
@@ -96,8 +97,35 @@
 						"payTs":"1900-01-01 00:00:00","remark":"","shopNm":"我的么么","showCoupon":false,
 						"uniNotifyUrl":"http://192.168.8.46:14630/ds-callback-notify/o2o/wx","uniOrderNo":"",
 						"updTs":"2017-10-20 13:53:23.466166000","userId":""
+					},
+					{
+						"canRefund":false,"couponAmt":0,"couponAmtYuan":"0.00","couponNo":"",
+						"crtTs":"2017-10-20 13:53:23.466166000","distAmt":0,"distAmtYuan":"0.00",
+						"goodsNum":4,"hostId":"70000030","id":"528","loginId":"15316117950",
+						"mchId":80001850,"mchNm":"么么","openId":"otaoJ0feuOdupdC2wf-Nh7q2LdNw","operator":"",
+						"orderAmt":400,"orderAmtOrg":400,"orderAmtOrgYuan":"4.00","orderAmtStr":"400",
+						"orderAmtYuan":"4.00","orderDt":20171020,
+						"orderGoods":[
+							{
+								"boxNo":"","couponAmt":0,"couponAmtYuan":"0.00","couponNo":"",
+								"crtTs":"2017-10-20 13:53:23.482149000","distId":159,"goodsAmt":100,
+								"goodsAmtYuan":"1.00","goodsImgLogo":"test","goodsNm":"商品1",
+								"goodsNo":"5200004201","hostId":"70000030","id":255,"ip":"","mchId":80001850,
+								"operator":"","orderAmt":400,"orderAmtOrg":400,"orderAmtOrgYuan":"4.00",
+								"orderAmtYuan":"4.00","orderDt":20171020,"orderNo":"200121710200000000218",
+								"orderNum":4,"orderSt":0,"orderStDesc":"待支付 ","remark":"","shopId":60002252,
+								"shopNm":"我的么么","updTs":"2017-10-20 13:53:23.482149000"
+							}
+						],
+						"orderNo":"200121710200000000218","orderSrc":3,"orderSrcDesc":"用户小程序，线上店铺",
+						"orderSt":0,"orderStDesc":"待支付 ","orderTp":1,"orderTpDesc":"线上预售","payMode":2,
+						"payModeDesc":"微信小程序支付","payModeShortDesc":"微信支付","payOrderNo":"",
+						"payTs":"1900-01-01 00:00:00","remark":"","shopNm":"我的么么","showCoupon":false,
+						"uniNotifyUrl":"http://192.168.8.46:14630/ds-callback-notify/o2o/wx","uniOrderNo":"",
+						"updTs":"2017-10-20 13:53:23.466166000","userId":""
 					}
-				]
+				],
+				showPayModel:false
 			}
 		},
 		components:{
@@ -112,6 +140,14 @@
 </script>
 <style scoped>
 	/* pages/order/order.wxss */
+	.clearfix:after{
+	  clear:both;
+	  content:'';
+	  display:block;
+	  visibility:hidden;
+	  width:0;
+	  height:0;
+	}
 	.padding-20{
 		width:100%;
 		height:.2rem;
@@ -128,7 +164,7 @@
 	  height:1rem;
 	  border-right:1px solid #ccc;
 	  background:#fff;
-	  span-align:center;
+	  text-align:center;
 	  font-size:.3rem;
 	  color:#333;
 	  line-height:1rem;
@@ -149,7 +185,7 @@
 	  line-height:.50rem;
 	  font-size:.40rem;
 	  color:#ccc;
-	  span-align:center;
+	  text-align:center;
 	}
 
 	/*order body*/
@@ -164,12 +200,12 @@
 	  float:left;
 	  width:100%;
 	  height:.88rem;
-	  border-bottom:1rpx solid #e5e5e5;
+	  border-bottom:1px solid #e5e5e5;
 	}
 	.shop-order:first-of-type .shop-name{
-	  border-top:1rpx solid #e5e5e5;
+	  border-top:1px solid #e5e5e5;
 	}
-	.shop-name image{
+	.shop-name img{
 	  float:left;
 	  margin:.25rem .10rem 0 .30rem;
 	  width:.45rem;
@@ -196,6 +232,7 @@
 
 	.shop-goods-list{
 	  float:left;
+	  width:100%;
 	  background:#fff;
 	}
 	.shop-goods-list .shop-good{
@@ -203,7 +240,7 @@
 	  height:1.96rem;
 	  border-bottom:2px solid #e5e7e2;
 	}
-	.shop-goods-list .shop-good image{
+	.shop-goods-list .shop-good img{
 	  float:left;
 	  margin-top:.22rem;
 	  margin-left:.28rem;
@@ -237,13 +274,13 @@
 	  font-size:.30rem;
 	  font-weight:bold;
 	  color:#fa3e2d;
-	  span-align:center;
+	  text-align:center;
 	}
 	.shop-good-info .shop-good-num{
 	  margin-top:.60rem;
 	  display:block;
 	  width:1.20rem;
-	  span-align:center;
+	  text-align:center;
 	  font-size:.26rem;
 	  color:#333;
 	}
@@ -314,7 +351,7 @@
 	  border-radius:50%;
 	  border:2px solid #676767;
 	  font-size:.26rem;
-	  span-align:center;
+	  text-align:center;
 	  line-height:.36rem;
 	  color:#676767;
 	}
@@ -324,7 +361,7 @@
 	  line-height:.60rem;
 	  font-size:.30rem;
 	  color:#333;
-	  span-align:center;
+	  text-align:center;
 	  border-bottom:1px solid #bcbcbc;
 	}
 	.pay-info-body{
@@ -338,7 +375,7 @@
 	  height:.70rem;
 	  line-height:.70rem;
 	  font-size:.30rem;
-	  span-align:center;
+	  text-align:center;
 	}
 	.pay-info-body .pay-info-money{
 	  line-height:.60rem;
@@ -357,7 +394,7 @@
 	  font-size:.30rem;
 	  color:#fff;
 	  border-radius:.05rem;
-	  span-align:center;
+	  text-align:center;
 	}
 	.pay-info-pay .topay.disabled{
 	  background:rgba(38,177,254,.5);
