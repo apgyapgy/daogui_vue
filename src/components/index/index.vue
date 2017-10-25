@@ -42,7 +42,7 @@
 	    </div>
 
 	    <!--暂无商铺-->
-	    <div v-show="noshop" class="no-shop">
+	    <div v-show="noShop" class="no-shop">
 	      	<img src="./no-shop.png"/>
 	      	<span>该小区附近暂无商铺(收件宝快递柜）</span>
 	      	<span>请尝试切换其他小区</span>
@@ -60,8 +60,8 @@
 	export default{
 		data(){
 			return{
-				"banners":["http://n3-q.mafengwo.net/s5/M00/8D/61/wKgB3FCgixKAVSKEACodGZ2qxEQ49.jpeg?imageMogr2%2Fthumbnail%2F%21310x207r%2Fgravity%2FCenter%2Fcrop%2F%21310x207%2Fquality%2F90%7Cwatermark%2F1%2Fimage%2FaHR0cDovL3AzLXEubWFmZW5nd28ubmV0L3M4L00wMC82Mi82MC93S2dCcFZodUN3NkFKR1MxQUFBSk5QeGl2RTQ2MzEucG5n%2Fgravity%2FNorthWest%2Fdx%2F10%2Fdy%2F11"],
-				"location":{
+				banners:["http://n3-q.mafengwo.net/s5/M00/8D/61/wKgB3FCgixKAVSKEACodGZ2qxEQ49.jpeg?imageMogr2%2Fthumbnail%2F%21310x207r%2Fgravity%2FCenter%2Fcrop%2F%21310x207%2Fquality%2F90%7Cwatermark%2F1%2Fimage%2FaHR0cDovL3AzLXEubWFmZW5nd28ubmV0L3M4L00wMC82Mi82MC93S2dCcFZodUN3NkFKR1MxQUFBSk5QeGl2RTQ2MzEucG5n%2Fgravity%2FNorthWest%2Fdx%2F10%2Fdy%2F11"],
+				location:{
 					"areaNm":"上海小区",
 					"bmapLat":"31.228522821982",
 					"bmapLng":"121.56115068654",
@@ -69,7 +69,7 @@
 					"hostAddrShort":"508",
 					"hostId":"70000030"
 				},
-				"shopList":[{
+				shopList:[{
 					"bmapLat":"31.23055",
 					"bmapLng":"121.55694",
 					"distAmt":0,
@@ -90,6 +90,9 @@
 		methods:{
 			jumpShopInfo:function(){
 				//跳转店铺
+				this.$router.push({
+					path:'/shop'
+				});
 			},
 			chooseLocation:function(){
 				//选择地理定位
@@ -99,8 +102,6 @@
 			Foot
 		},
 		created:function(){
-
-			console.log(this.$route.matched)
 		}
 	}
 </script>
