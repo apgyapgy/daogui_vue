@@ -8,6 +8,7 @@ import Order from '@/components/order/order'
 import My from '@/components/my/my'
 import Shop from '@/components/shop/shop'
 import Coupon from '@/components/coupon/coupon'
+import CheckOrder from '@/components/checkOrder/checkOrder'
 
 Vue.use(Router)
 
@@ -69,6 +70,13 @@ export default new Router({
     	meta:{
     		title:'我的优惠券'
     	}
+    },{
+        path:'/checkOrder',
+        name:'CheckOrder',
+        component:CheckOrder,
+        meta:{
+            title:'确认订单'
+        }
     }
   ]
 })
