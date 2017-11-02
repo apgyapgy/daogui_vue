@@ -8,6 +8,15 @@
 	export default{
 		props:{
 			backTopIconShowFlag:Boolean
+		},
+		methods:{
+			handleScroll:function(){
+				console.log("滚动吧，小宝贝!");
+			}
+		},
+		ready(){
+			console.log("top:ready");
+			window.addEventListener('scroll', this.handleScroll);
 		}
 	}
 </script>

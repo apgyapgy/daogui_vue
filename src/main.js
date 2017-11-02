@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import VueResource from 'vue-resource'
 import VueWechat from 'vue-wechat-title'
+import store from './store/store.js'
 
 import './assets/css/weui.min.css'
 import './assets/css/jquery-weui.min.css'
@@ -33,5 +34,6 @@ new Vue({
   el: '#app',
   router,
   template: '<App/>',
+  store,
   components: { App }
 })

@@ -18,10 +18,9 @@
 		          		<span class='good-price'>￥{{item.goodsAmt?item.goodsAmt/100:0}}</span>
 		        	</div>
 			        <div class='add-sub'>
-			          	<img v-show="item.cartGoodsNum>0" :goodsNo="item.goodsNo" @click="addsub" type="sub" :num="item.cartGoodsNum" class='sub' src="./sub.png"/>
+			          	<img v-show="item.cartGoodsNum>0" @click="addsub(item.goodsNo)" class='sub' src="./sub.png"/>
 			          	<span v-show="item.cartGoodsNum>0" class='num'>{{item.cartGoodsNum}}</span>
-			          	<img 
-			            :goodsno="item.goodsNo" :goodsamt="item.goodsAmt" @click="saveCart" :index="idx" class='add' src="./add.png"/>
+			          	<img @click="saveCart(item.goodsNo)" class='add' src="./add.png"/>
 			        </div>
 		      	</div>
 		    </div>
@@ -35,7 +34,7 @@
 		<!--底部购物车-->
 		<div @click="showCarInfo" class='car-bar'>
 		  	<div class="car-icon" :class="{'active':selectIds.length>0}">
-		    	<span v-show="cartInfo.orderNums>0" class='car-num'>{{cartInfo.orderNums>99?'99+':cartInfo.orderNums}}</span>
+		    	<span v-show="cartInfo.orderNums>0" class='car-num'>{{getCartNums}}</span>
 		    	<img src="./shop-car.png"/>
 		  	</div>
 		  	<div class='car-money'>
@@ -57,19 +56,19 @@
 		      	<div class='goods clearfix'>
 
 			        <div v-for="item in cartList" class='good'>
-			          	<div @click.stop="selectGood" :goodsNo="item.goodsNo"
-			            class="select-icon" :class="{'active':item.isSelected}">
+			          	<div @click.stop="selectGood(item.goodsNo)"
+			            class="select-icon" :class="{'active':selectIds.indexOf(item.goodsNo)!=-1}">
 			            	<img src="./success.png"/>
 			          	</div>
-			          	<img :src="imgPre+item.goodsImgLogo"/>
+			          	<img src="./good.png"/>
 			          	<div class='good-info'>
 			            	<span class='good-name'>{{item.goodsNm}}</span>
 			            	<span class='good-price'>￥{{item.goodsAmt?item.goodsAmt/100:0}}</span>
 			          	</div>
 			          	<div class='add-sub'>
-			            	<image v-show="item.orderNum>0" :goodsNo="item.goodsNo" @click.stop="addsub" type="sub" :num="item.orderNum" class='sub' src="./sub.png"/>
+			            	<img v-show="item.orderNum>0" @click.stop="addsub(item.goodsNo)"  class='sub' src="./sub.png"/>
 			            	<span v-show="item.orderNum>0" class='num'>{{item.orderNum}}</span>
-			            	<image @click.stop="addsub" type="add" :goodsNo="item.goodsNo" :num="item.orderNum" class='add' src="./add.png"/>
+			            	<img @click.stop="saveCart(item.goodsNo)" class='add' src="./add.png"/>
 			          	</div>
 			        </div>
 
@@ -90,12 +89,12 @@
 
 		    	<div class='car-info-head'> 
 		      		<div v-show="cartList.length>0" class='select' @click.stop="selectAll"> 
-		        		<div class="select-icon" :class="{'active':selectInfo.selectAll}">
+		        		<div class="select-icon" :class="{'active':selectIds.length == cartList.length}">
 		          			<img src="./success.png"/>
 		        		</div>
 		        		<div class='has-selected'>全选<span>(已选{{selectInfo.selectNums}}件)</span></div>
 		      		</div>
-		      		<div bindtap="emptyCart" class='clear-car'>
+		      		<div @click.stop="emptyCart" class='clear-car'>
 		        		<img src="./clear.png"/>
 		        		<span>清空购物车</span>
 		      		</div>
@@ -119,103 +118,7 @@
 	export default{
 		data(){
 			return{
-				goodsList:[
-					{
-						"cartGoodsNum":1,"goodsAmt":888,"goodsAmtStr":"8.88","goodsImgDetail":"test",
-						"goodsImgLogo":"test","goodsNm":"满8.88减8.87","goodsNo":"5200004411","goodsNum":219,
-						"goodsNumTotal":1,"goodsPackNum":0,"goodsPackWeight":0,"goodsPackWeightJin":"0",
-						"goodsSt":1,"goodsTp":1,"mchId":80001850
-					},{
-						"cartGoodsNum":2,"goodsAmt":1100,"goodsAmtStr":"11.00","goodsImgDetail":"test",
-						"goodsImgLogo":"test","goodsNm":"满10减11","goodsNo":"5200004419","goodsNum":4,
-						"goodsNumTotal":1,"goodsPackNum":0,"goodsPackWeight":0,"goodsPackWeightJin":"0",
-						"goodsSt":1,"goodsTp":0,"mchId":80001850
-					},{
-						"cartGoodsNum":1,"goodsAmt":1100,"goodsAmtStr":"11.00","goodsImgDetail":"err save img",
-						"goodsImgLogo":"non","goodsNm":"11","goodsNo":"5200004430","goodsNum":12,
-						"goodsNumTotal":11,"goodsPackNum":0,"goodsPackWeight":0,"goodsPackWeightJin":"0",
-						"goodsSt":1,"goodsTp":0,"mchId":80001850
-					},{
-						"cartGoodsNum":1,"goodsAmt":1100,"goodsAmtStr":"11.00","goodsImgDetail":"err save img",
-						"goodsImgLogo":"non","goodsNm":"11","goodsNo":"5200004434","goodsNum":12,
-						"goodsNumTotal":11,"goodsPackNum":0,"goodsPackWeight":0,"goodsPackWeightJin":"0",
-						"goodsSt":1,"goodsTp":0,"mchId":80001850
-					},{
-						"cartGoodsNum":1,"goodsAmt":1100,"goodsAmtStr":"11.00","goodsImgDetail":"err save img",
-						"goodsImgLogo":"non","goodsNm":"11","goodsNo":"5200004436","goodsNum":12,
-						"goodsNumTotal":11,"goodsPackNum":0,"goodsPackWeight":0,"goodsPackWeightJin":"0",
-						"goodsSt":1,"goodsTp":0,"mchId":80001850
-					},{
-						"cartGoodsNum":1,"goodsAmt":300,"goodsAmtStr":"3.00","goodsImgDetail":"err save img",
-						"goodsImgLogo":"non","goodsNm":"打得过","goodsNo":"5200004438","goodsNum":3,
-						"goodsNumTotal":2,"goodsPackNum":0,"goodsPackWeight":0,"goodsPackWeightJin":"0",
-						"goodsSt":1,"goodsTp":0,"mchId":80001850
-					},{
-						"cartGoodsNum":1,"goodsAmt":1100,"goodsAmtStr":"11.00","goodsImgDetail":"err save img",
-						"goodsImgLogo":"non","goodsNm":"11111","goodsNo":"5200004441","goodsNum":12,
-						"goodsNumTotal":11,"goodsPackNum":0,"goodsPackWeight":0,"goodsPackWeightJin":"0",
-						"goodsSt":1,"goodsTp":0,"mchId":80001850
-					},{
-						"cartGoodsNum":1,"goodsAmt":1100,"goodsAmtStr":"11.00","goodsImgDetail":"err save img",
-						"goodsImgLogo":"non","goodsNm":"11","goodsNo":"5200004442","goodsNum":12,
-						"goodsNumTotal":11,"goodsPackNum":0,"goodsPackWeight":0,"goodsPackWeightJin":"0",
-						"goodsSt":1,"goodsTp":0,"mchId":80001850
-					},{
-						"cartGoodsNum":1,"goodsAmt":500,"goodsAmtStr":"5.00","goodsImgDetail":"err save img",
-						"goodsImgLogo":"non","goodsNm":"455","goodsNo":"5200004443","goodsNum":6,
-						"goodsNumTotal":5,"goodsPackNum":0,"goodsPackWeight":0,"goodsPackWeightJin":"0",
-						"goodsSt":1,"goodsTp":0,"mchId":80001850
-					},{
-						"cartGoodsNum":1,"goodsAmt":1100,"goodsAmtStr":"11.00","goodsImgDetail":"err save img",
-						"goodsImgLogo":"non","goodsNm":"222","goodsNo":"5200004444","goodsNum":12,
-						"goodsNumTotal":11,"goodsPackNum":0,"goodsPackWeight":0,"goodsPackWeightJin":"0",
-						"goodsSt":1,"goodsTp":0,"mchId":80001850
-					},{
-						"cartGoodsNum":1,"goodsAmt":300,"goodsAmtStr":"3.00","goodsImgDetail":"testimg.jp",
-						"goodsImgLogo":"non","goodsNm":"f","goodsNo":"5200004446","goodsNum":4,
-						"goodsNumTotal":3,"goodsPackNum":0,"goodsPackWeight":0,"goodsPackWeightJin":"0",
-						"goodsSt":1,"goodsTp":0,"mchId":80001850
-					},{
-						"cartGoodsNum":1,"goodsAmt":1200,"goodsAmtStr":"12.00","goodsImgDetail":"testimg.jp",
-						"goodsImgLogo":"non","goodsNm":"ff","goodsNo":"5200004447","goodsNum":13,
-						"goodsNumTotal":12,"goodsPackNum":0,"goodsPackWeight":0,"goodsPackWeightJin":"0",
-						"goodsSt":1,"goodsTp":0,"mchId":80001850
-					},{
-						"cartGoodsNum":1,"goodsAmt":1100,"goodsAmtStr":"11.00","goodsImgDetail":"testimg.jp",
-						"goodsImgLogo":"non","goodsNm":"1111 ","goodsNo":"5200004448","goodsNum":11,
-						"goodsNumTotal":11,"goodsPackNum":0,"goodsPackWeight":0,"goodsPackWeightJin":"0",
-						"goodsSt":1,"goodsTp":0,"mchId":80001850
-					},{
-						"cartGoodsNum":0,"goodsAmt":1100,"goodsAmtStr":"11.00","goodsImgDetail":"testimg.jp",
-						"goodsImgLogo":"non","goodsNm":"1111","goodsNo":"5200004450","goodsNum":12,
-						"goodsNumTotal":11,"goodsPackNum":0,"goodsPackWeight":0,"goodsPackWeightJin":"0",
-						"goodsSt":1,"goodsTp":0,"mchId":80001850
-					},{
-						"cartGoodsNum":0,"goodsAmt":100,"goodsAmtStr":"1.00","goodsImgDetail":"testimg.jp",
-						"goodsImgLogo":"non","goodsNm":"db ","goodsNo":"5200004451","goodsNum":2,
-						"goodsNumTotal":1,"goodsPackNum":0,"goodsPackWeight":0,"goodsPackWeightJin":"0",
-						"goodsSt":1,"goodsTp":0,"mchId":80001850
-					},{
-						"cartGoodsNum":0,"goodsAmt":400,"goodsAmtStr":"4.00","goodsImgDetail":"err save img",
-						"goodsImgLogo":"non","goodsNm":"4","goodsNo":"5200004452","goodsNum":5,
-						"goodsNumTotal":4,"goodsPackNum":0,"goodsPackWeight":0,"goodsPackWeightJin":"0",
-						"goodsSt":1,"goodsTp":0,"mchId":80001850
-					},{
-						"cartGoodsNum":0,"goodsAmt":100,"goodsAmtStr":"1.00","goodsImgDetail":"err save img",
-						"goodsImgLogo":"non","goodsNm":"测测错错错","goodsNo":"5200004453","goodsNum":2,
-						"goodsNumTotal":1,"goodsPackNum":0,"goodsPackWeight":0,"goodsPackWeightJin":"0",
-						"goodsSt":1,"goodsTp":0,"mchId":80001850
-					},{
-						"cartGoodsNum":0,"goodsAmt":100,"goodsAmtStr":"1.00","goodsImgDetail":"err save img",
-						"goodsImgLogo":"non","goodsNm":"我的人","goodsNo":"5200004454","goodsNum":2,
-						"goodsNumTotal":1,"goodsPackNum":0,"goodsPackWeight":0,"goodsPackWeightJin":"0",
-						"goodsSt":1,"goodsTp":0,"mchId":80001850
-					},{
-						"cartGoodsNum":0,"goodsAmt":1,"goodsAmtStr":"0.01","goodsImgDetail":"err save img",
-						"goodsImgLogo":"err save img","goodsNm":"盖茨","goodsNo":"5200004456","goodsNum":2,
-						"goodsNumTotal":2,"goodsPackNum":0,"goodsPackWeight":0,"goodsPackWeightJin":"0",
-						"goodsSt":1,"goodsTp":1,"mchId":80001850
-					}],
+				goodsList:[],
 				cartInfo:{
 					"orderNums":"15",
 					"totalAmt":"13755"
@@ -228,86 +131,7 @@
 					shopId:60002260,shopLogo:"",shopNm:"我的么么",shopSt:1,
 					updTs:"2017-10-24 14:48:31.524583000"
 				},
-				cartList:[
-					{
-						"crtTs":"2017-10-25 15:41:36.732000000","distAmt":1,"goodsAmt":888,
-						"goodsImgLogo":"test","goodsNm":"满8.88减8.87","goodsNo":"5200004411",
-						"goodsNum":219,"hostId":"70000030","loginId":"15316117950","mchId":80001850,
-						"operator":"15316117950","orderAmt":888,"orderNum":1,"remark":"","shopNm":"我的么么",
-						"updTs":"2017-10-25 15:41:36.732000000","userId":"15316117950"
-					},{
-						"crtTs":"2017-10-25 10:06:18.882861000","distAmt":1,"goodsAmt":1100,
-						"goodsImgLogo":"test","goodsNm":"满10减11","goodsNo":"5200004419","goodsNum":4,
-						"hostId":"70000030","loginId":"15316117950","mchId":80001850,"operator":"15316117950",
-						"orderAmt":1100,"orderNum":2,"remark":"","shopNm":"我的么么",
-						"updTs":"2017-10-25 10:06:19.526591000","userId":"15316117950"
-					},{
-						"crtTs":"2017-10-25 15:41:35.890441000","distAmt":1,"goodsAmt":1100,
-						"goodsImgLogo":"non","goodsNm":"11","goodsNo":"5200004430","goodsNum":12,
-						"hostId":"70000030","loginId":"15316117950","mchId":80001850,"operator":"15316117950",
-						"orderAmt":1100,"orderNum":1,"remark":"","shopNm":"我的么么",
-						"updTs":"2017-10-25 15:41:35.890441000","userId":"15316117950"
-					},{
-						"crtTs":"2017-10-25 15:41:37.766425000","distAmt":1,"goodsAmt":1100,
-						"goodsImgLogo":"non","goodsNm":"11","goodsNo":"5200004434","goodsNum":12,
-						"hostId":"70000030","loginId":"15316117950","mchId":80001850,"operator":"15316117950",
-						"orderAmt":1100,"orderNum":1,"remark":"","shopNm":"我的么么",
-						"updTs":"2017-10-25 15:41:37.766425000","userId":"15316117950"
-					},{
-						"crtTs":"2017-10-25 15:41:38.697331000","distAmt":1,"goodsAmt":1100,
-						"goodsImgLogo":"non","goodsNm":"11","goodsNo":"5200004436","goodsNum":12,
-						"hostId":"70000030","loginId":"15316117950","mchId":80001850,
-						"operator":"15316117950","orderAmt":1100,"orderNum":1,"remark":"","shopNm":"我的么么",
-						"updTs":"2017-10-25 15:41:38.697331000","userId":"15316117950"
-					},{
-						"crtTs":"2017-10-25 15:41:40.293575000","distAmt":1,"goodsAmt":300,
-						"goodsImgLogo":"non","goodsNm":"打得过","goodsNo":"5200004438","goodsNum":3,
-						"hostId":"70000030","loginId":"15316117950","mchId":80001850,"operator":"15316117950",
-						"orderAmt":300,"orderNum":1,"remark":"","shopNm":"我的么么",
-						"updTs":"2017-10-25 15:41:40.293575000","userId":"15316117950"
-					},{
-						"crtTs":"2017-10-25 15:41:41.212399000","distAmt":1,"goodsAmt":1100,
-						"goodsImgLogo":"non","goodsNm":"11111","goodsNo":"5200004441","goodsNum":12,
-						"hostId":"70000030","loginId":"15316117950","mchId":80001850,"operator":"15316117950",
-						"orderAmt":1100,"orderNum":1,"remark":"","shopNm":"我的么么",
-						"updTs":"2017-10-25 15:41:41.212399000","userId":"15316117950"
-					},{
-						"crtTs":"2017-10-25 15:41:42.607368000","distAmt":1,"goodsAmt":1100,
-						"goodsImgLogo":"non","goodsNm":"11","goodsNo":"5200004442","goodsNum":12,
-						"hostId":"70000030","loginId":"15316117950","mchId":80001850,
-						"operator":"15316117950","orderAmt":1100,"orderNum":1,"remark":"","shopNm":"我的么么",
-						"updTs":"2017-10-25 15:41:42.607368000","userId":"15316117950"
-					},{
-						"crtTs":"2017-10-25 15:41:43.417903000","distAmt":1,"goodsAmt":500,
-						"goodsImgLogo":"non","goodsNm":"455","goodsNo":"5200004443","goodsNum":6,
-						"hostId":"70000030","loginId":"15316117950","mchId":80001850,"operator":"15316117950",
-						"orderAmt":500,"orderNum":1,"remark":"","shopNm":"我的么么",
-						"updTs":"2017-10-25 15:41:43.417903000","userId":"15316117950"
-					},{
-						"crtTs":"2017-10-25 15:41:45.115128000","distAmt":1,"goodsAmt":1100,
-						"goodsImgLogo":"non","goodsNm":"222","goodsNo":"5200004444","goodsNum":12,
-						"hostId":"70000030","loginId":"15316117950","mchId":80001850,"operator":"15316117950",
-						"orderAmt":1100,"orderNum":1,"remark":"","shopNm":"我的么么",
-						"updTs":"2017-10-25 15:41:45.115128000","userId":"15316117950"
-					},{
-						"crtTs":"2017-10-25 15:41:46.651740000","distAmt":1,"goodsAmt":300,
-						"goodsImgLogo":"non","goodsNm":"f","goodsNo":"5200004446","goodsNum":4,
-						"hostId":"70000030","loginId":"15316117950","mchId":80001850,"operator":"15316117950",
-						"orderAmt":300,"orderNum":1,"remark":"","shopNm":"我的么么",
-						"updTs":"2017-10-25 15:41:46.651740000","userId":"15316117950"
-					},{
-						"crtTs":"2017-10-25 15:41:47.338128000","distAmt":1,"goodsAmt":1200,
-						"goodsImgLogo":"non","goodsNm":"ff","goodsNo":"5200004447","goodsNum":13,
-						"hostId":"70000030","loginId":"15316117950","mchId":80001850,"operator":"15316117950",
-						"orderAmt":1200,"orderNum":1,"remark":"","shopNm":"我的么么",
-						"updTs":"2017-10-25 15:41:47.338128000","userId":"15316117950"
-					},{
-						"crtTs":"2017-10-25 15:41:48.908919000","distAmt":1,"goodsAmt":1100,
-						"goodsImgLogo":"non","goodsNm":"1111 ","goodsNo":"5200004448","goodsNum":11,
-						"hostId":"70000030","loginId":"15316117950","mchId":80001850,"operator":"15316117950",
-						"orderAmt":1100,"orderNum":1,"remark":"","shopNm":"我的么么","updTs":"2017-10-25 15:41:48.908919000","userId":"15316117950"
-					}
-				],
+				cartList:[],
 				showCarInfoFlag:false,
 			    options:{//url参数
 			      mchId:"80001828",
@@ -320,26 +144,85 @@
 			      selectAmt:0
 			    },
 			    selectIds:[],
-			    expireList:[{
-					"crtTs":"2017-10-24 14:19:45.511089000","distAmt":1,"goodsAmt":667,
-					"goodsImgLogo":"test","goodsNm":"满6.77减6.66","goodsNo":"5200004403",
-					"goodsNum":0,"hostId":"70000030","loginId":"15316117950","mchId":80001850,
-					"operator":"15316117950","orderAmt":667,"orderNum":1,"remark":"","shopNm":"我的么么",
-					"updTs":"2017-10-24 14:19:45.511089000","userId":"15316117950"
-				}], //过期失效商品				
+			    expireList:[], //过期失效商品				
 				imgPre:"https://static.fuiou.com/",
 				backTopIconShowFlag:true
 			}
 		},
 		methods:{
-			hideCarInfo:function(){},
+			hideCarInfo:function(){
+				this.showCarInfoFlag = false;
+			},
 			preventTapParent:function(){},
-			selectGood:function(){},
-			addsub:function(){},
-			selectAll:function(){},
-			showCarInfo:function(){},
+			selectGood:function(goodsNo){
+				var _ids = this.selectIds,
+					_cartList = this.cartList;
+				if(_ids.indexOf(goodsNo)==-1){
+					_ids.push(goodsNo);
+				}else{
+					var _key = -1;
+					for(var key in _cartList){
+						if(_cartList[key].goodsNo == goodsNo){
+							_key = key;
+							break;
+						}
+					}
+					_ids.splice(_ids.indexOf(goodsNo),1);
+				}
+				this.selectIds = _ids;
+			},
+			addsub:function(goodsNo){
+				this.$store.commit('addsub',goodsNo);
+			},
+			selectAll:function(){//全选
+				var _cartList = this.cartList;
+				var _ids = this.selectIds;
+				if(_cartList.length > _ids.length){
+					_ids = [];
+					for(var key in _cartList){
+						_ids.push(_cartList[key].goodsNo);
+					}
+				}else{
+					_ids = [];
+				}
+				this.selectIds = _ids;
+			},
+			showCarInfo:function(){
+				if(this.cartList.length>0 || this.expireList.length>0){
+					this.showCarInfoFlag = true;
+				}
+			},
 			topay:function(){},
-			saveCart:function(){}
+			saveCart:function(goodsNo){
+				this.$store.commit("addUserCart",goodsNo);
+			},
+			getCartList:function(){
+				this.cartList = this.$store.state.cartList;
+			},
+			getGoodsList:function(){
+				this.goodsList = this.$store.state.goodsList;
+			},
+			emptyCart:function(){
+				this.$store.commit("emptyCart");
+				this.expireList = [];
+				this.getCartList();
+			}
+
+		},
+		computed:{
+			getCartNums:function(){
+				var _cartList = this.cartList;
+				var _totalNum = 0;
+				for(var key in _cartList){
+					_totalNum+=_cartList[key].orderNum;
+				}
+				return _totalNum>99?'99+':_totalNum;
+			}
+		},
+		created(){
+			this.expireList = this.$store.state.expireList;
+			this.getCartList();
+			this.getGoodsList();
 		},
 		components:{
 			Top
@@ -543,7 +426,7 @@
 	  background:#26b1fe;
 	}
 	.car-info-wrapper .car-icon{
-	  top:-1.00rem;
+	  top:-1.80rem;
 	}
 	.car-money{
 	  margin-left:1.20rem;
@@ -598,11 +481,16 @@
 	  position:absolute;
 	  left:0;
 	  bottom:.86rem;
-	  height:100%;
+	  width:100%;
+	  height:60%;
 	  background:#fff;
 	}
 	.car-info-wrapper .car-bar .car-money{
 	  margin-left:.30rem;
+	}
+	.car-info-content .goods{
+		height:100%;
+		overflow-y:scroll;
 	}
 	.car-info-wrapper img{
 	  margin-left:.15rem;
@@ -614,6 +502,9 @@
 	  width:4.70rem;
 	}
 	.car-info-head{
+	  position:absolute;
+	  left:0;
+	  top:-.8rem;
 	  width:100%;
 	  height:.80rem;
 	  background:#fff;
@@ -625,16 +516,16 @@
 	}
 	.select-icon{
 	  float:left;
-	  width:.36rem;
-	  height:.36rem;
+	  width:.38rem;
+	  height:.38rem;
 	  border-radius:50%;
-	  border:2px solid #26b1fe;
+	  border:1px solid #26b1fe;
 	}
 	.select-icon img{
 	  display:none;
 	  float:left;
-	  margin-top:.06rem;
-	  margin-left:.05rem;
+	  margin-top:.05rem;
+	  margin-left:.03rem;
 	  width:.30rem;
 	  height:.26rem;
 	  border:0;

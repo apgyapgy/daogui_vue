@@ -209,6 +209,7 @@
 	  height:2.60rem;
 	  background:#f2f2f2;
 	  border-top:1px solid #e5e5e5;
+	  text-align:left;
 	}
 	.order-head .order-area,
 	.order-head .order-cloth,
