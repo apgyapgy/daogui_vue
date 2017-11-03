@@ -38,8 +38,8 @@
 		<!--去结算-->
 		<div class='car-bar'>
 		  	<div class='car-money'>
-		    	<span class='delivery-money'>配送费:{{goods[0].distAmt?goods[0].distAmt/100:0}}元</span>
 		    	<span class='car-total-money'>实际支付金额:<span>{{(payPrice-couponAmt)>0?(payPrice-couponAmt)/100:0}}</span>元</span>
+		    	<span class='delivery-money'>配送费:{{goods[0].distAmt?goods[0].distAmt/100:0}}元</span>
 		  	</div>
 		  	<div @click.stop="topay" class="to-pay" :class="{'active':isPayAble&&isOrderGetted}">去结算</div>
 		</div>
@@ -62,8 +62,8 @@
 		</div>
 
 		<!--布放地-->
-		<div @click.stop="hideArea" v-show="areaShowFlag" class="order-shop clearfix">
-		  	<div @click.stop="selectShop(id)"  v-for="(item,id) in shopHost"  class='shop'>
+		<div @click.stop="hideArea" v-show="areaShowFlag==true" class="order-shop clearfix">
+		  	<div @click.stop="getShop(item.hostId)"  v-for="(item,id) in shopHost"  class='shop'>
 			    <div class="select" :class="{'active':item.select}">
 			      	<img src="./success.png"/>
 			    </div>
@@ -102,7 +102,7 @@
 			    couponAmt:0,//优惠券价格
 			    couponNo:'',//已选 中的优惠券id
 			    options:[],//页面参数
-			    shop:[],//店铺信息
+			    shop:{},//店铺信息
 			    goods:[
 				    {
 			    		"crtTs":"2017-10-25 17:42:23.319579000","distAmt":100,"goodsAmt":1,
@@ -164,10 +164,14 @@
 			selectCoupon:function(_id){//选择优惠券
 			},
 			hideArea:function(){
-				this.data.areaShowFlag = false;
+				if(this.areaShowFlag == true){
+					this.areaShowFlag = false;
+				}
 			},
 			showArea:function(){
-				this.data.areaShowFlag = true;
+				if(this.areaShowFlag == false){
+					this.areaShowFlag = true;
+				}
 			},
 			selectShop:function(_id){//选择小区
 			},
@@ -182,7 +186,39 @@
 			},
 			topay:function(){
 				//去结算
+			},
+			getShop:function(hostId){
+				var _shop = this.shopHost;
+				if(hostId){
+					for(var key in _shop){
+						if(_shop[key].hostId == hostId){
+							this.shop = _shop[key];
+							_shop[key].select = true;
+						}else{
+							_shop[key].select = false;
+						}
+					}
+				}else{
+					this.shop = _shop[0];
+					_shop[0].select = true;
+				}
+				if(this.areaShowFlag == true){
+					this.areaShowFlag = false;
+				}
+				this.shopHost = _shop;
+			},
+			sortShop:function(){
+				var _shop = this.shopHost;
+				for(var key in _shop){
+					_shop[key].select = false;
+				}
+				this.shopHost = _shop;
+				this.getShop();
 			}
+		},
+		created(){
+			this.isOrderGetted = true;
+			this.sortShop();
 		}
 	}
 </script>
@@ -203,10 +239,10 @@
 	}
 	/*顶部订单信息*/
 	.order-head{
-	  padding-top:.26rem;
+	  /* padding-top:.26rem; */
 	  padding-bottom:.35rem;
 	  width:100%;
-	  height:2.60rem;
+	  height:2.90rem;
 	  background:#f2f2f2;
 	  border-top:1px solid #e5e5e5;
 	  text-align:left;
@@ -239,7 +275,9 @@
 	  font-size:.26rem;
 	  overflow:hidden;
 	}
-
+	.order-head .order-cloth{
+		border-bottom:0;
+	}
 	/*底部购物车*/
 	.car-bar{
 	  position:fixed;
@@ -282,6 +320,7 @@
 	.car-money .delivery-money{
 	  display:block;
 	  color:#000;
+	  text-align: left;
 	}
 	.car-money .car-total-money span{
 	  color:#f33;
@@ -291,6 +330,7 @@
 	  line-height:.40rem;
 	  font-size:.30rem;
 	  font-weight:bold;
+	  text-align:left;
 	}
 	.car-money .delivery-money{
 	  margin-top:.10rem;
@@ -318,6 +358,7 @@
 	}
 	/*订单商品列表*/
 	.order-goods-list{
+	  width:100%;
 	  float:left;
 	  background:#fff;
 	}
@@ -325,7 +366,7 @@
 	.order-goods-list .order-good{
 	  width:100%;
 	  height:1.96rem;
-	  border-top:2px solid #e5e7e2;
+	  border-top:1px solid #e5e7e2;
 	}
 	.order-good .order-good-right{
 	  float:left;
@@ -352,6 +393,7 @@
 	  font-weight:bold;
 	  word-break:break-all;
 	  overflow:hidden;
+	  text-align:left;
 	}
 	.order-good-right .order-good-info{
 	  margin-top:.30rem;
@@ -369,7 +411,7 @@
 	}
 	.order-good-right .order-good-info .order-good-num{
 	  float:right;
-	  margin-right:05rem;
+	  margin-right:.05rem;
 	  width:1.00rem;
 	  height:.46rem;
 	  line-height:.46rem;
@@ -380,10 +422,10 @@
 	/*到达时间*/
 	.order-wrapper .arrive-time{
 	  float:left;
-	  padding-top:.18rem;
 	  width:100%;
 	  color:#26b1fe;
 	  border-top:2px solid #e5e7e2;
+	  text-align:left;
 	}
 	.order-wrapper .arrive-time,
 	.order-wrapper .discount span{
@@ -428,6 +470,7 @@
 	  width:100%;
 	  height:7.87rem;
 	  background:rgba(0,0,0,0.7);
+	  overflow-y:scroll;
 	}
 	.order-coupon .coupon{
 	  margin-bottom:.20rem;
@@ -437,9 +480,6 @@
 	  background:#fff;
 	  border-radius:.10rem;
 	}
-	/*.order-coupon .coupon:first-of-type{
-	  margin-top:20rem;
-	}*/
 	.coupon .coupon-left{
 	  position:relative;
 	  float:left;
@@ -525,10 +565,10 @@
 	  position:absolute;
 	  top:.10rem;
 	  left:.10rem;
-	  width:.36rem;
-	  height:.36rem;
+	  width:.38rem;
+	  height:.38rem;
 	  border-radius:50%;
-	  border:2px solid #26b1fe;
+	  border:1px solid #26b1fe;
 	}
 	.order-shop .shop .select.active{
 	  background:#26b1fe;

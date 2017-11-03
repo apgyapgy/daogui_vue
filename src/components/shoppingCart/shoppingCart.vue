@@ -72,19 +72,22 @@
 								"goodsNm":"1","goodsNo":"5200004379","goodsSt":"1","hostId":"70000032",
 								"isExpire":"1","loginId":"15316117950","mchId":80001850,
 								"operator":"15316117950","orderAmt":1,"orderNum":2,"remark":"",
-								"updTs":"2017-10-24 08:58:37.205081000","userId":"15316117950","isTouchMove":false
+								"updTs":"2017-10-24 08:58:37.205081000","userId":"15316117950",
+								"isTouchMove":false
 							},{
 								"crtTs":"2017-10-23 16:49:36.860873000","goodsAmt":1,"goodsImgLogo":"test",
 								"goodsNm":"1","goodsNo":"5200004380","goodsSt":"1","hostId":"70000032",
 								"isExpire":"1","loginId":"15316117950","mchId":80001850,
 								"operator":"15316117950","orderAmt":1,"orderNum":4,"remark":"",
-								"updTs":"2017-10-23 17:23:11.594328000","userId":"15316117950","isTouchMove":false
+								"updTs":"2017-10-23 17:23:11.594328000","userId":"15316117950",
+								"isTouchMove":false
 							},{
 								"crtTs":"2017-10-23 18:02:29.012531000","goodsAmt":4,"goodsImgLogo":"test",
 								"goodsNm":"名字","goodsNo":"5200004382","goodsSt":"1","hostId":"70000030",
 								"isExpire":"1","loginId":"15316117950","mchId":80001850,
 								"operator":"15316117950","orderAmt":4,"orderNum":2,"remark":"",
-								"updTs":"2017-10-23 18:10:57.237138000","userId":"15316117950","isTouchMove":false
+								"updTs":"2017-10-23 18:10:57.237138000","userId":"15316117950",
+								"isTouchMove":false
 							}]
 						}]
 					},{
@@ -96,19 +99,22 @@
 								"goodsNm":"1","goodsNo":"5200004379","goodsSt":"1","hostId":"70000032",
 								"isExpire":"1","loginId":"15316117950","mchId":80001850,
 								"operator":"15316117950","orderAmt":1,"orderNum":2,"remark":"",
-								"updTs":"2017-10-24 08:58:37.205081000","userId":"15316117950","isTouchMove":false
+								"updTs":"2017-10-24 08:58:37.205081000",
+								"userId":"15316117950","isTouchMove":false
 							},{
 								"crtTs":"2017-10-23 16:49:36.860873000","goodsAmt":1,"goodsImgLogo":"test",
 								"goodsNm":"1","goodsNo":"5200004380","goodsSt":"1","hostId":"70000032",
 								"isExpire":"1","loginId":"15316117950","mchId":80001850,
 								"operator":"15316117950","orderAmt":1,"orderNum":4,"remark":"",
-								"updTs":"2017-10-23 17:23:11.594328000","userId":"15316117950","isTouchMove":false
+								"updTs":"2017-10-23 17:23:11.594328000",
+								"userId":"15316117950","isTouchMove":false
 							},{
 								"crtTs":"2017-10-23 18:02:29.012531000","goodsAmt":4,"goodsImgLogo":"test",
 								"goodsNm":"名字","goodsNo":"5200004382","goodsSt":"1","hostId":"70000030",
 								"isExpire":"0","loginId":"15316117950","mchId":80001850,
 								"operator":"15316117950","orderAmt":4,"orderNum":2,"remark":"",
-								"updTs":"2017-10-23 18:10:57.237138000","userId":"15316117950","isTouchMove":false
+								"updTs":"2017-10-23 18:10:57.237138000",
+								"userId":"15316117950","isTouchMove":false
 							}]
 						}]
 					}
@@ -248,6 +254,7 @@
 
 	.car-goods-list{
 	  float:left;
+	  width:100%;
 	  background:#fff;
 	}
 	.car-goods-list .car-good{

@@ -50,13 +50,14 @@
     
     	<div class='padding-100'></div>
 
-		
+		<Top></Top>
 		<Foot :curTable="0"></Foot>
 	</div>
 </template>
 
 <script>
-	import Foot from '@/components/footer/footer'
+	import Foot from '@/components/footer/footer';
+	import Top from '@/components/top/top';
 	export default{
 		data(){
 			return{
@@ -99,7 +100,8 @@
 			}
 		},
 		components:{
-			Foot
+			Foot,
+			Top
 		},
 		created:function(){
 		}

@@ -1,21 +1,38 @@
 <template>
 	<div class="top">
-		<img catchtap="goTop" class="top" :class="{'active':backTopIconShowFlag==true}" src='./top.png'/>
+		<img @click.stop="goTop" class="top" :class="{'active':backTopIconShowFlag==false}" src='./top.png'/>
 	</div>
 </template>
 
 <script>
 	export default{
-		props:{
+		/*props:{
 			backTopIconShowFlag:Boolean
-		},
-		methods:{
-			handleScroll:function(){
-				console.log("滚动吧，小宝贝!");
+		},*/
+		data(){
+			return{
+				backTopIconShowFlag:false
 			}
 		},
-		ready(){
-			console.log("top:ready");
+		methods:{
+			handleScroll:function(e){
+				//var scrollTop = window.pageYOffset||document.documentElement.scrollTop||document.body.scrollTop;
+				if(window.scrollY > e.path[1].innerHeight){
+					if(this.backTopIconShowFlag == false){
+						this.backTopIconShowFlag = true;
+					}
+				}else{
+					if(this.backTopIconShowFlag == true){
+
+						this.backTopIconShowFlag = false;
+					}
+				}
+			},
+			goTop:function(){
+				$("html,body").animate({"scrollTop":0},300);
+			}
+		},
+		mounted(){
 			window.addEventListener('scroll', this.handleScroll);
 		}
 	}
@@ -24,7 +41,7 @@
 <style scoped>
 	/*返回顶部*/
 	.top{
-	  display:none;
+	  display:block;
 	  position:fixed;
 	  bottom:2rem;
 	  right:.30rem;
@@ -33,6 +50,6 @@
 	  border-radius:50%;
 	}
 	.top.active{
-	  display:block;
+	  display:none;
 	}
 </style>

@@ -38,10 +38,10 @@
 		    	<img src="./shop-car.png"/>
 		  	</div>
 		  	<div class='car-money'>
-		    	<span class='car-total-money'>合计金额:<span>{{shop.distAmt>=0&&selectInfo.selectAmt>0?(selectInfo.selectAmt+shop.distAmt)/100:0}}</span>元</span>
+		    	<span class='car-total-money'>合计金额:<span>{{cartMoney?cartMoney/100:0}}</span>元</span>
 		    	<span class='delivery-money'>配送费:{{shop.distAmt?shop.distAmt/100:0}}元,起送费{{shop.distAmtMin?shop.distAmtMin/100:0}}元</span>
 		  	</div>
-		  	<div @click.stop="topay" class="to-pay" :class="{'disabled':!(selectIds.length>0&&selectInfo.selectAmt>=shop.distAmtMin)}">去结算</div>
+		  	<div @click.stop="topay" class="to-pay" :class="{'disabled':!(selectIds.length>0&&cartMoney>=0)}">去结算</div>
 		</div>
 
 		<!--购物车详情-->
@@ -102,14 +102,14 @@
 
 			    <div @click="showCarInfo" class='car-bar'>
 			      	<div class='car-money'>
-			        	<span class='car-total-money'>合计金额:<span>{{selectInfo.selectAmt>0&&shop.distAmt>=0?(selectInfo.selectAmt+shop.distAmt)/100:0}}</span>元</span>
+			        	<span class='car-total-money'>合计金额:<span>{{cartMoney?cartMoney/100:0}}</span>元</span>
 			        	<span class='delivery-money'>配送费:{{shop.distAmt?shop.distAmt/100:0}}元,起送费{{shop.distAmtMin?shop.distAmtMin/100:0}}元</span>
 			      	</div>
-			      	<div @click.stop="topay" class="to-pay" :class="{'disabled':!(selectIds.length>0&&selectInfo.selectAmt>=shop.distAmtMin)}">去结算</div>
+			      	<div @click.stop="topay" class="to-pay" :class="{'disabled':!(selectIds.length>0&&cartMoney>=0)}">去结算</div>
 			    </div>
 		  	</div>
 		</div>
-		<Top :backTopIconShowFlag="backTopIconShowFlag"></Top>
+		<Top></Top>
 	</div>
 </template>
 
@@ -146,7 +146,8 @@
 			    selectIds:[],
 			    expireList:[], //过期失效商品				
 				imgPre:"https://static.fuiou.com/",
-				backTopIconShowFlag:true
+				backTopIconShowFlag:true,
+				cartMoney:0
 			}
 		},
 		methods:{
@@ -170,6 +171,7 @@
 					_ids.splice(_ids.indexOf(goodsNo),1);
 				}
 				this.selectIds = _ids;
+				this.getCartAmt();
 			},
 			addsub:function(goodsNo){
 				this.$store.commit('addsub',goodsNo);
@@ -186,26 +188,43 @@
 					_ids = [];
 				}
 				this.selectIds = _ids;
+				this.getCartAmt();
 			},
 			showCarInfo:function(){
 				if(this.cartList.length>0 || this.expireList.length>0){
 					this.showCarInfoFlag = true;
 				}
 			},
-			topay:function(){},
+			topay:function(){
+				if(this.selectIds.length > 0){
+					this.$router.push({path:'/checkOrder'});
+				}
+			},
 			saveCart:function(goodsNo){
 				this.$store.commit("addUserCart",goodsNo);
 			},
 			getCartList:function(){
 				this.cartList = this.$store.state.cartList;
+				this.getCartAmt();
 			},
 			getGoodsList:function(){
 				this.goodsList = this.$store.state.goodsList;
 			},
-			emptyCart:function(){
+			emptyCart:function(){//清空购物车
 				this.$store.commit("emptyCart");
 				this.expireList = [];
 				this.getCartList();
+				this.showCarInfoFlag = false;
+			},
+			getCartAmt:function(){
+				var _cartList = this.cartList;
+				var _total = 0;
+				for(var key in _cartList){
+					if(this.selectIds.indexOf(_cartList[key].goodsNo) != -1){
+						_total += _cartList[key].orderNum*_cartList[key].goodsAmt;
+					}
+				}
+				this.cartMoney = _total;
 			}
 
 		},
@@ -531,7 +550,7 @@
 	  border:0;
 	}
 	.select .select-icon img{
-	  margin-left:3px;
+	  margin-left:.03rem;
 	}
 	.select-icon.active img{
 	  display:block;

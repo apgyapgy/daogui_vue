@@ -10,7 +10,7 @@
 			      	<p class="weui-tabbar__label">首页</p>
 			    </a> 
 			    <a @click="jump(1)" data-to="/cart" class="weui-tabbar__item" :class="{'weui-bar__item--on':curTable==1}">
-			      	<!-- <span class="weui-badge" style="position: absolute;top: -.4em;right: 1em;">8</span> -->
+			      	<span v-show="cartsNum>0" class="weui-badge" style="position: absolute;top: -.4em;right: 1em;">{{cartsNum>99?'99+':cartsNum}}</span>
 			      	<div class="weui-tabbar__icon">
 			      		<img v-if="curTable==1" src="./car_active.png" alt="">
 			        	<img v-else src="./car.png" alt="">
@@ -40,13 +40,25 @@
 		props:{
 			curTable:Number
 		},
+		data(){
+			return {
+				cartsNum:0
+			}
+		},
 		methods:{
 			jump:function(n){
 				var _jumpUrl = ['/index','/cart','/order','/my'];
 				this.$router.push({
 					path:_jumpUrl[n]
 				});
+			},
+			getCartNums:function(){
+				this.cartsNum = this.$store.state.cartsNum;
 			}
+		},
+		mounted(){
+			this.$store.commit("getCartNums");
+			this.getCartNums();
 		}
 	}
 </script>

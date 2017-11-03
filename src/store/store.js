@@ -188,7 +188,145 @@ const state = {
 		"goodsNum":0,"hostId":"70000030","loginId":"15316117950","mchId":80001850,
 		"operator":"15316117950","orderAmt":667,"orderNum":1,"remark":"","shopNm":"我的么么",
 		"updTs":"2017-10-24 14:19:45.511089000","userId":"15316117950"
-	}]
+	}],
+	coupons:[
+		{
+			"couponAmt":300,"couponAmtMin":200,"couponDesc":"","couponLogo":"",
+			"couponLogoTeam":"","couponNm":"34567","couponNo":"60003792",
+			"couponSrcDesc":"系统发放","couponStDesc":"未使用","couponTp":1,
+			"expireDt":20171115,"mchAddr":"视3213","mchId":80001828,"mchLogo":"",
+			"mchMobile":"18516589920","mchNm":"视不会后悔","startDt":20170901
+		},{
+			"couponAmt":200,"couponAmtMin":200,"couponDesc":"","couponLogo":"",
+			"couponLogoTeam":"","couponNm":"23456","couponNo":"60003790",
+			"couponSrcDesc":"系统发放","couponStDesc":"未使用","couponTp":1,
+			"expireDt":20171103,"mchAddr":"视3213","mchId":80001828,"mchLogo":"",
+			"mchMobile":"18516589920","mchNm":"视不会后悔","startDt":20170901
+		},{
+			"couponAmt":90,"couponAmtMin":98,"couponDesc":"","couponLogo":"",
+			"couponLogoTeam":"","couponNm":"模棱两可","couponNo":"60003794",
+			"couponSrcDesc":"系统发放","couponStDesc":"未使用","couponTp":1,
+			"expireDt":20171101,"mchAddr":"视3213","mchId":80001828,"mchLogo":"",
+			"mchMobile":"18516589920","mchNm":"视不会后悔","startDt":20171016
+		},{
+			"couponAmt":90,"couponAmtMin":98,"couponDesc":"","couponLogo":"",
+			"couponLogoTeam":"","couponNm":"模棱两可","couponNo":"60003794",
+			"couponSrcDesc":"商户公众号发放","couponStDesc":"已使用","couponTp":1,
+			"expireDt":20170930,"mchAddr":"视3213","mchId":80001828,"mchLogo":"","mchMobile":"18516589920",
+			"mchNm":"视不会后悔","startDt":20171016
+		},{
+			"couponAmt":90,"couponAmtMin":98,"couponDesc":"","couponLogo":"","couponLogoTeam":"",
+			"couponNm":"模棱两可","couponNo":"60003794","couponSrcDesc":"商户公众号发放",
+			"couponStDesc":"已过期","couponTp":1,"expireDt":20170930,"mchAddr":"视3213",
+			"mchId":80001828,"mchLogo":"","mchMobile":"18516589920","mchNm":"视不会后悔","startDt":20171016
+		},{
+			"couponAmt":1000,"couponAmtMin":1500,"couponDesc":"","couponLogo":"","couponLogoTeam":"",
+			"couponNm":"新增测试","couponNo":"60003777","couponSrcDesc":"商户公众号发放",
+			"couponStDesc":"已过期","couponTp":1,"expireDt":20170930,"mchAddr":"123",
+			"mchId":80001342,"mchLogo":"sys/o2o2/2017/07/12/o2oGoods_196808574038786.jpg",
+			"mchMobile":"18211111111","mchNm":"小李探花xx2","startDt":20170901
+		},{
+			"couponAmt":1000,"couponAmtMin":1500,"couponDesc":"","couponLogo":"","couponLogoTeam":"",
+			"couponNm":"新增测试","couponNo":"60003777","couponSrcDesc":"商户公众号发放",
+			"couponStDesc":"已过期","couponTp":1,"expireDt":20170930,"mchAddr":"123",
+			"mchId":80001342,"mchLogo":"sys/o2o2/2017/07/12/o2oGoods_196808574038786.jpg",
+			"mchMobile":"18211111111","mchNm":"小李探花xx2","startDt":20170901
+		},{
+			"couponAmt":1000,"couponAmtMin":1500,"couponDesc":"","couponLogo":"","couponLogoTeam":"",
+			"couponNm":"新增测试","couponNo":"60003777","couponSrcDesc":"商户公众号发放",
+			"couponStDesc":"已过期","couponTp":1,"expireDt":20170930,"mchAddr":"123","mchId":80001342,
+			"mchLogo":"sys/o2o2/2017/07/12/o2oGoods_196808574038786.jpg","mchMobile":"18211111111",
+			"mchNm":"小李探花xx2","startDt":20170901
+		},{
+			"couponAmt":1000,"couponAmtMin":1500,"couponDesc":"","couponLogo":"","couponLogoTeam":"",
+			"couponNm":"新增测试","couponNo":"60003777","couponSrcDesc":"商户公众号发放",
+			"couponStDesc":"已过期","couponTp":1,"expireDt":20170930,"mchAddr":"123","mchId":80001342,
+			"mchLogo":"sys/o2o2/2017/07/12/o2oGoods_196808574038786.jpg","mchMobile":"18211111111",
+			"mchNm":"小李探花xx2","startDt":20170901
+		},{
+			"couponAmt":1000,"couponAmtMin":1500,"couponDesc":"","couponLogo":"","couponLogoTeam":"",
+			"couponNm":"新增测试","couponNo":"60003777","couponSrcDesc":"商户公众号发放",
+			"couponStDesc":"已过期","couponTp":1,"expireDt":20170930,"mchAddr":"123","mchId":80001342,
+			"mchLogo":"sys/o2o2/2017/07/12/o2oGoods_196808574038786.jpg","mchMobile":"18211111111",
+			"mchNm":"小李探花xx2","startDt":20170901
+		},{
+			"couponAmt":100,"couponAmtMin":4500,"couponDesc":"","couponLogo":"","couponLogoTeam":"",
+			"couponNm":"记忆","couponNo":"60003780","couponSrcDesc":"商户公众号发放",
+			"couponStDesc":"已过期","couponTp":1,"expireDt":20170922,"mchAddr":"视3213","mchId":80001822,
+			"mchLogo":"","mchMobile":"15555555555","mchNm":"哈赢得","startDt":20170922
+		},{
+			"couponAmt":100,"couponAmtMin":4500,"couponDesc":"","couponLogo":"","couponLogoTeam":"",
+			"couponNm":"记忆","couponNo":"60003780","couponSrcDesc":"商户公众号发放",
+			"couponStDesc":"已过期","couponTp":1,"expireDt":20170922,"mchAddr":"视3213","mchId":80001822,
+			"mchLogo":"","mchMobile":"15555555555","mchNm":"哈赢得","startDt":20170922
+		},{
+			"couponAmt":100,"couponAmtMin":4500,"couponDesc":"","couponLogo":"","couponLogoTeam":"",
+			"couponNm":"记忆","couponNo":"60003780","couponSrcDesc":"商户公众号发放",
+			"couponStDesc":"已过期","couponTp":1,"expireDt":20170922,"mchAddr":"视3213","mchId":80001822,
+			"mchLogo":"","mchMobile":"15555555555","mchNm":"哈赢得","startDt":20170922
+		},{
+			"couponAmt":100,"couponAmtMin":4500,"couponDesc":"","couponLogo":"","couponLogoTeam":"",
+			"couponNm":"记忆","couponNo":"60003780","couponSrcDesc":"商户公众号发放",
+			"couponStDesc":"已过期","couponTp":1,"expireDt":20170922,"mchAddr":"视3213","mchId":80001822,
+			"mchLogo":"","mchMobile":"15555555555","mchNm":"哈赢得","startDt":20170922
+		},{
+			"couponAmt":100,"couponAmtMin":4500,"couponDesc":"","couponLogo":"","couponLogoTeam":"",
+			"couponNm":"记忆","couponNo":"60003780","couponSrcDesc":"商户公众号发放",
+			"couponStDesc":"已过期","couponTp":1,"expireDt":20170922,"mchAddr":"视3213","mchId":80001822,
+			"mchLogo":"","mchMobile":"15555555555","mchNm":"哈赢得","startDt":20170922
+		},{
+			"couponAmt":100,"couponAmtMin":4500,"couponDesc":"","couponLogo":"","couponLogoTeam":"",
+			"couponNm":"记忆","couponNo":"60003780","couponSrcDesc":"商户公众号发放",
+			"couponStDesc":"已过期","couponTp":1,"expireDt":20170922,"mchAddr":"视3213","mchId":80001822,
+			"mchLogo":"","mchMobile":"15555555555","mchNm":"哈赢得","startDt":20170922
+		},{
+			"couponAmt":100,"couponAmtMin":4500,"couponDesc":"","couponLogo":"","couponLogoTeam":"",
+			"couponNm":"记忆","couponNo":"60003780","couponSrcDesc":"商户公众号发放","couponStDesc":"已过期",
+			"couponTp":1,"expireDt":20170922,"mchAddr":"视3213","mchId":80001822,"mchLogo":"",
+			"mchMobile":"15555555555","mchNm":"哈赢得","startDt":20170922
+		},{
+			"couponAmt":100,"couponAmtMin":4500,"couponDesc":"","couponLogo":"","couponLogoTeam":"",
+			"couponNm":"记忆","couponNo":"60003780","couponSrcDesc":"商户公众号发放","couponStDesc":"已过期",
+			"couponTp":1,"expireDt":20170922,"mchAddr":"视3213","mchId":80001822,"mchLogo":"",
+			"mchMobile":"15555555555","mchNm":"哈赢得","startDt":20170922
+		},{
+			"couponAmt":100,"couponAmtMin":4500,"couponDesc":"","couponLogo":"","couponLogoTeam":"",
+			"couponNm":"记忆","couponNo":"60003780","couponSrcDesc":"商户公众号发放","couponStDesc":"已过期",
+			"couponTp":1,"expireDt":20170922,"mchAddr":"视3213","mchId":80001822,"mchLogo":"",
+			"mchMobile":"15555555555","mchNm":"哈赢得","startDt":20170922
+		},{
+			"couponAmt":100,"couponAmtMin":4500,"couponDesc":"","couponLogo":"","couponLogoTeam":"",
+			"couponNm":"记忆","couponNo":"60003780","couponSrcDesc":"商户公众号发放","couponStDesc":"已过期",
+			"couponTp":1,"expireDt":20170922,"mchAddr":"视3213","mchId":80001822,"mchLogo":"",
+			"mchMobile":"15555555555","mchNm":"哈赢得","startDt":20170922
+		},{
+			"couponAmt":1100,"couponAmtMin":0,"couponDesc":"","couponLogo":"","couponLogoTeam":"",
+			"couponNm":"好好","couponNo":"60003775","couponSrcDesc":"商户公众号发放","couponStDesc":"已过期",
+			"couponTp":1,"expireDt":20170921,"mchAddr":"视3213","mchId":80001822,"mchLogo":"",
+			"mchMobile":"15555555555","mchNm":"哈赢得","startDt":20170917
+		},{
+			"couponAmt":1100,"couponAmtMin":0,"couponDesc":"","couponLogo":"","couponLogoTeam":"",
+			"couponNm":"好好","couponNo":"60003775","couponSrcDesc":"商户公众号发放","couponStDesc":"已过期",
+			"couponTp":1,"expireDt":20170921,"mchAddr":"视3213","mchId":80001822,"mchLogo":"",
+			"mchMobile":"15555555555","mchNm":"哈赢得","startDt":20170917
+		},{
+			"couponAmt":1100,"couponAmtMin":0,"couponDesc":"","couponLogo":"","couponLogoTeam":"",
+			"couponNm":"好好","couponNo":"60003775","couponSrcDesc":"商户公众号发放","couponStDesc":"已过期",
+			"couponTp":1,"expireDt":20170921,"mchAddr":"视3213","mchId":80001822,"mchLogo":"",
+			"mchMobile":"15555555555","mchNm":"哈赢得","startDt":20170917
+		},{
+			"couponAmt":1100,"couponAmtMin":0,"couponDesc":"","couponLogo":"","couponLogoTeam":"",
+			"couponNm":"好好","couponNo":"60003775","couponSrcDesc":"商户公众号发放","couponStDesc":"已过期",
+			"couponTp":1,"expireDt":20170921,"mchAddr":"视3213","mchId":80001822,"mchLogo":"",
+			"mchMobile":"15555555555","mchNm":"哈赢得","startDt":20170917
+		},{
+			"couponAmt":1100,"couponAmtMin":0,"couponDesc":"","couponLogo":"","couponLogoTeam":"",
+			"couponNm":"好好","couponNo":"60003775","couponSrcDesc":"商户公众号发放","couponStDesc":"已过期",
+			"couponTp":1,"expireDt":20170921,"mchAddr":"视3213","mchId":80001822,"mchLogo":"",
+			"mchMobile":"15555555555","mchNm":"哈赢得","startDt":20170917
+		}
+	],
+	cartsNum:0
 };
 const mutations = {
 	/*imcre(state){
@@ -262,6 +400,14 @@ const mutations = {
 			_goodsList[_gidx].cartGoodsNum--;
 			_cartList[_cidx].orderNum--;
 		}
+	},
+	getCartNums(state){
+		var _cartList = state.cartList;
+		var _num = 0;
+		for(var key in _cartList){
+			_num += _cartList[key].orderNum;
+		}
+		state.cartsNum = _num;
 	}
 };
 const actions = {
