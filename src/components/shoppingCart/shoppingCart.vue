@@ -21,8 +21,7 @@
 
 		          		<div v-for="(good,goodidx) in shop.list" class="car-container"
 		          			:class="{'touch-move-active':good.isTouchMove}"
-			                :index="area+'#'+shopidx+'#'+goodidx" 
-			                bindtouchstart="touchstart" bindtouchmove="touchmove" >
+			                @touchstart="touchstart" @touchmove="touchmove($event,area+'#'+shopidx+'#'+goodidx)" >
 		            		<div class="car-good" :class="{'expired':good.isExpire==0}">
 		              			<!-- <img src="{{imgPre+good.goodsImgLogo}}"/> -->
 		              			<img src="./good.png"/>
@@ -32,7 +31,7 @@
 				                	<span class='car-good-num'>X{{good.orderNum}}</span>
 				              	</div>
 		            		</div>
-		            		<div class="del" catchtap="del" :index="area+'#'+shopidx+'#'+goodidx">删除</div>
+		            		<div class="del" @click.stop="del($event,area+'#'+shopidx+'#'+goodidx)" :index="area+'#'+shopidx+'#'+goodidx">删除</div>
 		          		</div>
 
 		        	</div>
@@ -149,6 +148,7 @@
 				//清空失效商品
 			},
 			jumpShop:function(){
+				console.log("跳转店铺");
 				//跳转店铺
 			},
 			getExpiredIds:function(){//获取失效商品编号 
@@ -168,7 +168,108 @@
 				}
 				_str = _str.substring(1);
 				this.expiredId = _str;
-			}
+			},
+			touchstart: function (e) {
+			    //开始触摸时 重置所有删除
+			    var _cartList = this.shoppingCartList;
+			    for (var area in _cartList){
+			      	for (var shop in _cartList[area].list){
+			        	for (var good in _cartList[area].list[shop].list){
+			          		if (_cartList[area].list[shop].list[good].isTouchMove){
+			            		_cartList[area].list[shop].list[good].isTouchMove = false;
+			          		}
+			        	}
+			      	}
+			    }
+			    this.startX = e.touches[0].clientX;
+			    this.startY = e.touches[0].clientY;
+			    this.shoppingCartList =  _cartList;
+			},
+			//滑动事件处理
+			touchmove: function (e,idx) {
+			    var that = this,
+			      	index = idx,//当前索引
+			      	startX = that.startX,//开始X坐标
+			      	startY = that.startY,//开始Y坐标
+			      	touchMoveX = e.touches[0].clientX,//滑动变化坐标
+			      	touchMoveY = e.touches[0].clientY,//滑动变化坐标
+			      	//获取滑动角度
+			      	angle = that.angle({ X: startX, Y: startY }, { X: touchMoveX, Y: touchMoveY });
+		    	var _indexArr = index.split("#");
+		    	var _cartList = this.shoppingCartList;
+			    for (var area in _cartList) {
+			      	for (var shop in _cartList[area].list) {
+				        for (var good in _cartList[area].list[shop].list) {
+				          	_cartList[area].list[shop].list[good].isTouchMove = false;
+				          	if (Math.abs(angle) > 30) 
+				            	return;
+				          	if (area == _indexArr[0] && shop == _indexArr[1] && good == _indexArr[2]) {
+				            	if (touchMoveX > startX) //右滑
+				              		_cartList[area].list[shop].list[good].isTouchMove = false;
+				            	else{ //左滑
+				              		_cartList[area].list[shop].list[good].isTouchMove = true;
+				            	}
+				          	}
+				        }
+			      	}
+			    }
+		    	//更新数据
+		    	that.shoppingCartList = _cartList;
+		 	},
+		  	/**
+		    * 计算滑动角度
+		    * @param {Object} start 起点坐标
+		    * @param {Object} end 终点坐标
+		    */
+		  	angle: function (start, end) {
+		    	var _X = end.X - start.X,
+		      		_Y = end.Y - start.Y
+		    	//返回角度 /Math.atan()返回数字的反正切值
+		   	    return 360 * Math.atan(_Y / _X) / (2 * Math.PI);
+		  	},
+		  	//删除事件
+		  	del: function (e,idx) {//删除购物车数据
+		    	var _index =idx;
+		    	var _indexArr = _index.split("#");
+		    	var _cartList = this.shoppingCartList;
+		    	var _shopId = _cartList[_indexArr[0]].list[_indexArr[1]].shopId;
+		    	var _goodId = _cartList[_indexArr[0]].list[_indexArr[1]].list[_indexArr[2]].goodsNo;
+		    	_cartList[_indexArr[0]].list[_indexArr[1]].list.splice(_indexArr[2],1);
+		    	if(_cartList[_indexArr[0]].list[_indexArr[1]].list.length == 0){
+		    		_cartList[_indexArr[0]].list.splice(_indexArr[1],1);
+		    	}
+		    	if(_cartList[_indexArr[0]].list.length == 0){
+		    		_cartList.splice(_indexArr[0],1);
+		    	}
+		    	this.shoppingCartList = _cartList;
+		    	this.getExpiredIds();
+		    	//this.deleteCart(_shopId,_goodId);
+		  	},
+		  	deleteCart:function(_shopId,_goodId){//删除某店铺购物车中某件商品
+		    	var _this = this;
+		    	console.log("delect cart:",_shopId,_goodId);return;
+		    	common.getAjax({
+		      		url: 'wx_we/deleteCart',
+		      		params: {
+		        		loginId: app.globalData.loginId,
+		        		shopId: _shopId,
+		        		goodsNo:_goodId
+		      		},
+		      		token: app.globalData.token,
+		      		success: function (res) {
+		        		if (res.data.code == 200) {
+		          			_this.getShopList();
+		          			_this.qryUserCartNums();
+		        		} else if (res.data.code == 40101) {
+		          			_this.getToken(function () {
+		            			_this.deleteCart(_shopId,_goodId);
+		          			});
+		        		} else {
+		          			common.showModal("删除购物车商品失败!");
+		        		}
+		      		}
+		    	});
+		  	}
 		},
 		created:function(){
 			this.getExpiredIds();
@@ -316,7 +417,7 @@
 	  font-size:.30rem;
 	  line-height:.40rem;
 	  color:#000;
-	  font-weight:bold;
+	  text-align:left;
 	}
 	.car-goods-list .car-good.expired .car-good-name{
 	  color:rgba(0,0,0,.5);
